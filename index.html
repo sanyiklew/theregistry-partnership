@@ -21,9 +21,31 @@
     <script src="./node_modules/resize-observer-polyfill/dist/ResizeObserver.js"></script>
     <!-- 💁 OPTIONAL: Fullscreen polyfill is required for experimental AR features in Canary -->
     <script src="./node_modules/fullscreen-polyfill/dist/fullscreen.polyfill.js"></script>
+    <script src="js/gradient.min.js"></script>
 </head>
 
 <body>
+    <style>
+        .canvas {
+            position: fixed !important;
+            left: 0 !important;
+            right: 0 !important
+        }
+        
+        #gradient-canvas {
+            width: 100%;
+            height: 100%;
+            --gradient-color-1: #2871cc;
+            --gradient-color-2: #bf8bff;
+            --gradient-color-3: #33007b;
+            --gradient-color-4: #090088;
+            z-index: -1
+        }
+    </style>
+    <div class="canvas-holder">
+        <canvas id="gradient-canvas" class="canvas">
+        </canvas>
+    </div>
     <div class="content">
 
         <h1><code>&lt;model-viewer&gt;</code></h1>
@@ -66,8 +88,8 @@ resize-observer-polyfill
 &lt;!--
   Magic Leap support
 -->
-&lt;script src="./js/prismatic.js">&lt;/script></code></pre> After we load the polyfills, we can load the <code>&lt;model-viewer&gt;</code> scripts. We use modules to load the scripts in modern browsers and `nomodule` to load a different
-                script for those browsers that don't support modules.
+&lt;script src="./js/prismatic.js">&lt;/script></code></pre> After we load the polyfills, we can load the
+                <code>&lt;model-viewer&gt;</code> scripts. We use modules to load the scripts in modern browsers and `nomodule` to load a different script for those browsers that don't support modules.
 
                 <pre><code class="language-html">&lt;script type="module" src="./js/model-viewer.js">&lt;/script>
 &lt;script nomodule src="./js/model-viewer-legacy.js">&lt;/script>  </code></pre> Once we have all the scripts installed we can use <code>&lt;model-viewer&gt;</code> by creating one or more instances of the custom element like show in
@@ -100,7 +122,7 @@ resize-observer-polyfill
                     ARCore, Apple's Quicklook (with some additional requirements), and Magic Leap.</p>
 
                 <p>For example, adding the <code>ar</code> attribute will provide a way to launch Google's <a href="https://developers.google.com/ar/develop/java/scene-viewer">Scene Viewer</a> in supported devices. See <a href="https://developers.google.com/ar/develop/java/scene-viewer#using_model-viewer_to_launch_scene_viewer">Using
-        <code>&lt;model-viewer&gt;</code> to launch Scene Viewer</a> for more information.</p>
+                <code>&lt;model-viewer&gt;</code> to launch Scene Viewer</a> for more information.</p>
 
                 <p>The code now looks like this:</p>
 
@@ -115,9 +137,10 @@ resize-observer-polyfill
                 <model-viewer src="./models/Satellite(1).gltf" alt="3D Satellite" camera-controls auto-rotate></model-viewer>
 
 
-                <p>Apple provides its own AR experiences on <a href="https://www.apple.com/ios/augmented-reality/">supported iOS 12+
-        devices</a> via <a href="https://developer.apple.com/videos/play/wwdc2018/603/">AR Quick Look</a> on Safari. This requires an additional <a href="https://graphics.pixar.com/usd/docs/Usdz-File-Format-Specification.html">USDZ</a> model which will
-                    be used only in supported iOS devices.</p>
+                <p>Apple provides its own AR experiences on <a href="https://www.apple.com/ios/augmented-reality/">supported iOS
+                12+
+                devices</a> via <a href="https://developer.apple.com/videos/play/wwdc2018/603/">AR Quick Look</a> on Safari. This requires an additional <a href="https://graphics.pixar.com/usd/docs/Usdz-File-Format-Specification.html">USDZ</a> model which
+                    will be used only in supported iOS devices.</p>
 
                 <p>If you have the USDZ model, you can add it to your experience using the <code>ios-src</code>attribute and the URL to the model.</p>
 
@@ -127,7 +150,8 @@ resize-observer-polyfill
     camera-controls
     ios-src="./models/Diner.usdz">&lt;/model-viewer></code></pre>
 
-                <model-viewer src="./models/Diner.gltf" alt="3D Diner" camera-controls ios-src="./models/Diner.usdz"></model-viewer>
+                <model-viewer src="./models/Diner.gltf" alt="3D Diner" camera-controls ios-src="./models/Diner.usdz">
+                </model-viewer>
 
                 <p>And, of course, you can provide support for both, using <code>ar</code> and <code>ios-src</code> together to cover both Android and iOS in the same element</p>
 
@@ -146,23 +170,26 @@ resize-observer-polyfill
                 <p>This barely begins to scratch the surface of what we can do with &lt;model-viewer>. See the <a href="https://googlewebcomponents.github.io/model-viewer/">documentation</a> for more information on what you can do and how you can expand
                     your 3D experiences on the web.</p>
 
-                <p>For more information see the <a href="">&lt;model-viewer&gt; documentation</a> and this 2018 post about <a href="https://developers.google.com/web/updates/2018/06/ar-for-the-web">Augmented reality for the web</a> that talks about the ideas
-                    that led to </p>
+                <p>For more information see the <a href="">&lt;model-viewer&gt; documentation</a> and this 2018 post about <a href="https://developers.google.com/web/updates/2018/06/ar-for-the-web">Augmented reality for the
+                web</a> that talks about the ideas that led to </p>
 
                 <p>Usdz is the wrinkle in the process. Most of the models in this page are loaded from glTF files, an interchange format created by the <a href="https://www.khronos.org/">Khronos Group</a> and that has wide support in terms of tools and technologies.
                     As pointed out in <a href="https://medium.com/@konathalasuren/all-about-apples-new-usdz-file-format-simplified-12dff29f3fc0">All
-        about Apple’s new USDZ File Format — Simplified</a> the technology has no open source tool support but there is commercial support, both from small companies like <a href="https://www.vectary.com/">Vectary</a> and large tool companies like Adobe's
-                    <a href="https://www.adobe.com/products/projectaero.html">Project Aero</a>.</p>
+                about Apple’s new USDZ File Format — Simplified</a> the technology has no open source tool support but there is commercial support, both from small companies like <a href="https://www.vectary.com/">Vectary</a> and large tool companies
+                    like Adobe's
+                    <a href="https://www.adobe.com/products/projectaero.html">Project Aero</a>.
+                </p>
 
                 <p>For more information about UDSZ, you can check the following resources.</p>
 
                 <ul>
                     <li><a href="https://graphics.pixar.com/usd/docs/Usdz-File-Format-Specification.html">Usdz File Format
-          Specification</a></li>
+                    Specification</a></li>
                     <li><a href="https://medium.com/@konathalasuren/all-about-apples-new-usdz-file-format-simplified-12dff29f3fc0">All
-          about Apple’s new USDZ File Format — Simplified</a></li>
-                    <li><a href="https://www.techrepublic.com/article/apples-usdz-ar-file-format-what-you-need-to-know/">Apple's USDZ
-          AR file format: What you need to know</a></li>
+                    about Apple’s new USDZ File Format — Simplified</a></li>
+                    <li><a href="https://www.techrepublic.com/article/apples-usdz-ar-file-format-what-you-need-to-know/">Apple's
+                    USDZ
+                    AR file format: What you need to know</a></li>
                     <li>
                         <a href="https://www.vectary.com/3d-modeling-news/apple-ar-kit-tools-explained-what-is-usdz-and-why-you-should-care/"></a>
                     </li>
