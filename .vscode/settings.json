@@ -1,0 +1,5 @@
+{
+    "liveServer.settings.port": 5501,
+    "appService.defaultWebAppToDeploy": "/subscriptions/46ae97f4-d5cd-47f0-a2be-2c106097e88c/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/theregistry-partnership",
+    "appService.deploySubpath": "."
+}
